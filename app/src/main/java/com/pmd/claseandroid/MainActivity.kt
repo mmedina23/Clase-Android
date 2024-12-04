@@ -6,8 +6,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
@@ -26,11 +30,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -78,7 +88,10 @@ class MainActivity : ComponentActivity() {
                     }*/
 
                     //llamado de la funcion del splah
-                    AppNavigation(innerPadding)
+                    //AppNavigation(innerPadding)
+
+                    //Formulario
+                    RegistroUsuarioForm("Prueba", modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -199,6 +212,83 @@ fun ListarPersona(persona: Persona, modifier: Modifier = Modifier) {
             )
         }
     }
+}
+
+@Composable
+fun RegistroUsuarioForm(nombre: String, modifier: Modifier = Modifier) {
+    val usuario = remember { mutableStateOf(TextFieldValue()) }
+    val primerNombre = remember { mutableStateOf(TextFieldValue()) }
+    val primerApellido = remember { mutableStateOf(TextFieldValue()) }
+    val segundoApellido = remember { mutableStateOf(TextFieldValue()) }
+
+    Column(
+        modifier = Modifier.padding(20.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = nombre,
+            style = TextStyle(fontSize = 40.sp, fontFamily = FontFamily.Cursive)
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+        Text(
+            text = "Registro de nuevo usuario"
+        )
+        Spacer(modifier = Modifier.height(45.dp))
+        TextField(
+            label = { Text(text = "Usuario") },
+            value = usuario.value,
+            onValueChange = { usuario.value = it }
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+        TextField(
+            label = { Text(text = "Primer Nombre") },
+            value = primerNombre.value,
+            onValueChange = { primerNombre.value = it }
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+        TextField(
+            label = { Text(text = "Primer apellido") },
+            value = primerApellido.value,
+            onValueChange = { primerApellido.value = it }
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+        TextField(
+            label = { Text(text = "Segundo apellido") },
+            value = segundoApellido.value,
+            onValueChange = { segundoApellido.value = it }
+        )
+        Spacer(modifier = Modifier.height(65.dp))
+        Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
+            Button(
+                onClick = {
+
+                    crearUsuario(
+                        usuario.value.text,
+                        primerNombre.value.text,
+                        primerApellido.value.text,
+                        segundoApellido.value.text
+
+                    )
+                },
+                shape = RoundedCornerShape(50.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text(text = "Crear")
+            }
+        }
+    }
+}
+
+private fun crearUsuario(
+    username: String,
+    primerNombre: String,
+    primerApellido: String = "",
+    segundoApellido: String = ""
+) {
+    println("usuario registrado: $username - $primerNombre - $primerApellido - $segundoApellido");
 }
 
 @Preview(showBackground = true)

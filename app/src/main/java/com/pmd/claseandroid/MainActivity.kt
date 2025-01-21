@@ -45,8 +45,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
+import com.pmd.claseandroid.data.RetrofitServiceFactory
 import com.pmd.claseandroid.navegacion.AppNavigation
 import com.pmd.claseandroid.ui.theme.ClaseAndroidTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,15 +64,21 @@ class MainActivity : ComponentActivity() {
             Persona("Maximus", "Max", 19)
         )
 
+        val service = RetrofitServiceFactory.retrofitService()
+        lifecycleScope.launch{
+            val vehiculo = service.listaVehiculosDisponibles("disponibles")
+            println(vehiculo)
+        }
+
         setContent {
             ClaseAndroidTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
                     //Funcion: card, botones, imagen
-                    /* Greeting(
+                    Greeting(
                          name = "Clase Android",
                          modifier = Modifier.padding(innerPadding)
-                     )*/
+                     )
 
 
                      //  LazyColumn: muestra las columnas en pantalla y renderiza segun lo que vaya mostrando
@@ -91,7 +100,7 @@ class MainActivity : ComponentActivity() {
                     //AppNavigation(innerPadding)
 
                     //Formulario
-                    RegistroUsuarioForm("Prueba", modifier = Modifier.padding(innerPadding))
+                   // RegistroUsuarioForm("Prueba", modifier = Modifier.padding(innerPadding))
                 }
             }
         }

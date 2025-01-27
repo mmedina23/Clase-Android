@@ -21,7 +21,7 @@ interface RetrofitService {
 object RetrofitServiceFactory{
     fun retrofitService(): RetrofitService{
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/api/v1/v1/")//parte de url que es fija
+            .baseUrl("http://10.0.2.2:8080/api/v1/")//parte de url que es fija
             .addConverterFactory(GsonConverterFactory.create())//convierte el resultado de la peticion a objeto
             .client(provideClient())
             .build().create(RetrofitService::class.java)

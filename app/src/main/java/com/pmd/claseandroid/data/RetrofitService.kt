@@ -6,6 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface RetrofitService {
@@ -13,6 +14,7 @@ interface RetrofitService {
     //servicio
     @GET("vehiculos")
     suspend fun listaVehiculosDisponibles(
+        @Header("x-llave-api") token: String,
         @Query("estado") estado:String
     ): List<Vehiculo>
 }

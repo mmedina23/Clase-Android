@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
 
         val service = RetrofitServiceFactory.retrofitService()
         lifecycleScope.launch{
-            val vehiculo = service.listaVehiculosDisponibles("disponibles")
+            val vehiculo = service.listaVehiculosDisponibles("30012025005447394","disponibles")
             println(vehiculo)
         }
 
